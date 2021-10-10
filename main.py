@@ -2,32 +2,25 @@ import json
 
 file = open('RF_9.txt', 'r', encoding="utf8")
 regions = []
-nomer = 0
+nomer = 10 # укажите номер ОКАТО
 rusia_space = 17130000
 rusia_count = 144100000
 detected = False
 difference = {}
 parameters = (file.readline().strip('\n').split(" "))
-for i in range(6):
-    param = parameters[i].split("_")
-    if param[0] == "Код":
-        parameters[i] = "Код"
-        nomer = param[1]
-
-    parameters[i] = parameters[i].replace("_", " ")
 while True:
     line = file.readline().strip("\n")
     if not line:
         break
     data = line.split(" ")
-    region = {parameters[0]: data[0].replace("_", " "), parameters[1]: data[1].replace("_", " "),
-              parameters[2]: data[2].replace("_", " "),
-              parameters[3]: data[3].replace("_", " "),
-              parameters[4]: data[4].replace("_", " "), parameters[5]: data[5].replace("_", " "),
-              parameters[6]: data[6].replace("_", " ")}
+    region = {parameters[0].replace("_", " "): data[0].replace("_", " "), parameters[1].replace("_", " "): data[1].replace("_", " "),
+              parameters[2].replace("_", " "): data[2].replace("_", " "),
+              parameters[3].replace("_", " "): data[3].replace("_", " "),
+              parameters[4].replace("_", " "): data[4].replace("_", " "), parameters[5].replace("_", " "): data[5].replace("_", " "),
+              parameters[6].replace("_", " "): data[6].replace("_", " ")}
     normalForm = {"Название": region.get("Название"), "Площадь": int(region.get("Площадь")),
                   "Население": int(region.get("Население")), "Округ": region.get("Округ"),
-                  "Адм. центр/столица": region.get("Адм. центр/столица"), "Код ОКАТО": int(region.get("Код")),
+                  "Адм. центр/столица": region.get("Адм. центр/столица"), "Код ОКАТО": region.get("Код ОКАТО"),
                   "Часовой пояс": region.get("Часовой пояс"),
                   "Площадь(процент)": round(int(region.get("Площадь")) * 100 / rusia_space, 4),
                   "Население(процент)": round(int(region.get("Население")) * 100 / rusia_count, 4),
